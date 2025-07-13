@@ -4,6 +4,6 @@ from django.contrib import admin
 from .models import Book
 class BookAdmin(admin.ModelAdmin):
     list_view = ('title', 'author', 'publication_year')
-    list_filters = ('title', 'author')
+    search_fields = ('title', 'author')
 
 admin.site.register(Book, BookAdmin)
