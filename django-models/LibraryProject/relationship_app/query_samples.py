@@ -26,6 +26,7 @@ def books_in_library(library_name):
         print(f"\nBooks in library '{library.name}':")
         for book in books:
             print(f"- {book.title} by {book.author.name}")
+            print(books.all())
     except Library.DoesNotExist:
         print(f"\nLibrary '{library_name}' not found.")
 
