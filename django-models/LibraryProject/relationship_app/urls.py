@@ -6,6 +6,8 @@ from .views import list_books, LibraryDetailView
 from django.urls import path
 from .views import register_view, login_view, logout_view, list_books, LibraryDetailView
 
+["add_book/", "edit_book/"]
+
 ["views.register", "LogoutView.as_view(template_name=", "LoginView.as_view(template_name="]
 
 urlpatterns = [
