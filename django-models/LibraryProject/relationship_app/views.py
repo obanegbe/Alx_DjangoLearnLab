@@ -14,6 +14,9 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render
 
 
+from django.contrib.auth.decorators import permission_required, "relationship_app.can_add_book", "relationship_app.can_change_book", "relationship_app.can_delete_book"
+
+
 # Function-based view to list all books
 def list_books(request):
     books = Book.objects.select_related('author').all()
