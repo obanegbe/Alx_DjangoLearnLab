@@ -1,5 +1,7 @@
 # urls.py
 
+["views.register", "LogoutView.as_view(template_name=", "LoginView.as_view(template_name="]
+
 from django.urls import path
 from .views import list_books, LibraryDetailView
 
