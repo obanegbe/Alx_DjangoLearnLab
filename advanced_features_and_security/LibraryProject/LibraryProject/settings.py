@@ -160,3 +160,46 @@ SECURE_CONTENT_TYPE_NOSNIFF = True  # Prevents MIME-type sniffing
 # Only allow cookies over HTTPS
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
+
+
+# Redirect all HTTP traffic to HTTPS
+SECURE_SSL_REDIRECT = True  # ✅ Enforce HTTPS across the app
+
+# HTTP Strict Transport Security (HSTS) settings
+SECURE_HSTS_SECONDS = 31536000  # ✅ Tell browsers to use HTTPS for the next 1 year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # ✅ Apply HSTS to all subdomains
+SECURE_HSTS_PRELOAD = True  # ✅ Allow inclusion in browser preload lists (like Chrome's)
+
+
+# Only send cookies over HTTPS
+SESSION_COOKIE_SECURE = True  # ✅ Secures session cookies
+CSRF_COOKIE_SECURE = True     # ✅ Secures CSRF cookies
+
+
+# Clickjacking Protection
+X_FRAME_OPTIONS = 'DENY'  # ✅ Prevent embedding in <iframe>
+
+# Prevent MIME-sniffing
+SECURE_CONTENT_TYPE_NOSNIFF = True  # ✅ Avoid misleading content types
+
+# Enable browser-side XSS filter
+SECURE_BROWSER_XSS_FILTER = True  # ✅ Some protection against reflected XSS
+
+
+
+# Security: Enforce HTTPS
+SECURE_SSL_REDIRECT = True  # Redirect all HTTP to HTTPS
+
+# Security: HTTP Strict Transport Security (HSTS)
+SECURE_HSTS_SECONDS = 31536000  # One year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True  # Eligible for browser preload lists
+
+# Security: Cookies over HTTPS only
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+# Security: Headers
+X_FRAME_OPTIONS = 'DENY'  # Prevents clickjacking
+SECURE_CONTENT_TYPE_NOSNIFF = True  # Avoid MIME-sniffing
+SECURE_BROWSER_XSS_FILTER = True  # Enables browser XSS protection
