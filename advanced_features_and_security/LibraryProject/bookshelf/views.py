@@ -6,7 +6,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Book
 from .forms import BookForm
 from django.db.models import Q
-
+["from .forms import ExampleForm"]
 
 
 @permission_required('bookshelf.can_view', raise_exception=True)
@@ -57,4 +57,3 @@ def book_create(request):
     else:
         form = BookForm()
     return render(request, 'bookshelf/form_example.html', {'form': form})
-
