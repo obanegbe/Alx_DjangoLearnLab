@@ -1,34 +1,27 @@
 from django.db import models
 
-# ==============================
-# Author Model
-# ==============================
-# Represents a book author.
-# Fields:
-#   - name: The full name of the author.
-# Relationships:
-#   - An Author can be linked to multiple Book instances (One-to-Many).
-class Author(models.Model):
-    name = models.CharField(max_length=255)
+# Create your models here.
+from django.db import models
+import datetime
 
-    def __str__(self):
+class Author(models.Model):
+    """
+    Author model to store the name of book authors.
+    One Author can have many Books.
+    """
+    name = models.CharField(max_length=100)
+
+    def _str_(self):
         return self.name
 
-
-# ==============================
-# Book Model
-# ==============================
-# Represents a book in the system.
-# Fields:
-#   - title: Title of the book.
-#   - publication_year: The year the book was published.
-#   - author: Foreign key linking each book to its Author.
-# Relationships:
-#   - A Book belongs to one Author (Many-to-One).
 class Book(models.Model):
-    title = models.CharField(max_length=255)
-    publication_year = models.PositiveIntegerField()
+    """
+    Book model stores title, publication year, and
+    links each book to one author via ForeignKey.
+    """
+    title = models.CharField(max_length=200)
+    publication_year = models.IntegerField()
     author = models.ForeignKey(Author, related_name='books', on_delete=models.CASCADE)
 
-    def __str__(self):
+    def _str_(self):
         return self.title

@@ -1,5 +1,4 @@
 # Delete the book you created and confirm the deletion by trying to retrieve all books again.
-from book_store.models import Book
 from bookshelf.models import Book
 
 new_book = Book.objects.get(title="Nineteen Eighty-Four")

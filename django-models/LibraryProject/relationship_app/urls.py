@@ -6,6 +6,8 @@ from .views import list_books, LibraryDetailView
 from django.urls import path
 from .views import register_view, login_view, logout_view, list_books, LibraryDetailView
 
+from .views import add_book, edit_book, delete_book
+
 ["add_book/", "edit_book/"]
 
 ["views.register", "LogoutView.as_view(template_name=", "LoginView.as_view(template_name="]
@@ -35,9 +37,6 @@ urlpatterns += [
     path('member-role/', member_view, name='member_view'),
 ]
 
-
-
-from .views import add_book, edit_book, delete_book
 
 urlpatterns += [
     path('books/add/', add_book, name='add_book'),
