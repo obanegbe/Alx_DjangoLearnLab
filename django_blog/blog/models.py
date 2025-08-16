@@ -4,6 +4,7 @@ from django.urls import reverse
 from .models import Post  # ensure Post model is imported
 
 
+["created_at"]
 class Post(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
