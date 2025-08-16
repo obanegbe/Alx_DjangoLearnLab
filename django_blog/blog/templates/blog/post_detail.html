@@ -4,9 +4,32 @@
 <p>{{ object.content }}</p>
 <small>By {{ object.author }} on {{ object.created_at }}</small>
 
-{% if user == object.author %}
-    <a href="{% url 'post-edit' object.pk %}">Edit</a> |
-    <a href="{% url 'post-delete' object.pk %}">Delete</a>
+<hr>
+<h3>Comments</h3>
+{% for comment in object.comments.all %}
+    <div>
+        <p>{{ comment.content }}</p>
+        <small>By {{ comment.author }} on {{ comment.created_at }}</small>
+        {% if user == comment.author %}
+            <a href="{% url 'comment-edit' comment.id %}">Edit</a> |
+            <a href="{% url 'comment-delete' comment.id %}">Delete</a>
+        {% endif %}
+    </div>
+    <hr>
+{% empty %}
+    <p>No comments yet. Be the first to comment!</p>
+{% endfor %}
+
+{% if user.is_authenticated %}
+    <h4>Add a Comment</h4>
+    <form method="post" action="{% url 'add-comment' object.id %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Post Comment</button>
+    </form>
+{% else %}
+    <p><a href="{% url 'login' %}">Log in</a> to comment.</p>
 {% endif %}
+
 <a href="{% url 'post-list' %}">Back to Posts</a>
 {% endblock %}
