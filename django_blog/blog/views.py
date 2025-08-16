@@ -119,7 +119,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         post = self.get_object()
         return self.request.user == post.author
 
-
+["CommentCreateView"]
 # Add a comment (handled inside post detail)
 def add_comment(request, post_id):
     post = get_object_or_404(Post, id=post_id)
