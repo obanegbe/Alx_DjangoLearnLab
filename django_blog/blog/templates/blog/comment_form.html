@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Edit Comment</h2>
+<h2>New Comment</h2>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Save</button>
+    <button type="submit">Add Comment</button>
 </form>
-<a href="{{ object.post.get_absolute_url }}">Cancel</a>
+<a href="{% url 'post-detail' pk=kwargs.pk %}">Cancel</a>
 {% endblock %}

@@ -22,9 +22,10 @@ urlpatterns = [
     path("post/<int:pk>/edit/", PostUpdateView.as_view(), name="post-edit"),
     path("post/<int:pk>/delete/", PostDeleteView.as_view(), name="post-delete"),
 
-        # Comment URLs
-    path("post/<int:post_id>/comments/new/", add_comment, name="add-comment"),
-    path("comment/<int:pk>/edit/", CommentUpdateView.as_view(), name="comment-edit"),
+    
+    # ✅ Comment URLs (now matching your description)
+    path("post/<int:pk>/comments/new/", CommentCreateView.as_view(), name="comment-create"),
+    path("comment/<int:pk>/update/", CommentUpdateView.as_view(), name="comment-update"),
     path("comment/<int:pk>/delete/", CommentDeleteView.as_view(), name="comment-delete"),
 ]
 
