@@ -20,6 +20,7 @@ class CustomUserCreationForm(UserCreationForm):
         model = User
         fields = ['username', 'email', 'password1', 'password2']
 
+
 # register_view: Handles new user registration using a custom form that includes email.
 def register_view(request):
     if request.method == 'POST':
@@ -34,6 +35,7 @@ def register_view(request):
     else:
         form = CustomUserCreationForm()
     return render(request, 'blog/register.html', {'form': form})
+
 
 # login_view: Handles user login with authentication.
 def login_view(request):
@@ -50,11 +52,13 @@ def login_view(request):
         form = AuthenticationForm()
     return render(request, 'blog/login.html', {'form': form})
 
+
 # logout_view: Logs the user out and redirects to login page.
 def logout_view(request):
     logout(request)
     messages.info(request, "You have been logged out.")
     return redirect('login')
+
 
 # profile_view: Allows authenticated users to view and update their profile email.
 @login_required
