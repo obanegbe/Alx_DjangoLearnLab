@@ -12,6 +12,8 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     # tags = TaggableManager()   # <-- NEW
+    tags = models.CharField(max_length=200, blank=True)  # simple tag field
+
 
     def __str__(self):
         return self.title
