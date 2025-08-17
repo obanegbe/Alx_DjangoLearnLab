@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'taggit',
     'blog',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -76,11 +77,11 @@ WSGI_APPLICATION = 'django_blog.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',  # or 'django.db.backends.sqlite3', etc.
+        'ENGINE': 'django.db.backends.sqlite3',  # or 'django.db.backends.postgresql', etc.
         'NAME': 'my_database_name',
         'USER': 'my_db_user',      # <— USER goes here
         'PASSWORD': 'my_db_password',
-        'HOST': 'localhost',       # or an IP address
+        'HOST': "127.0.0.1",       # or an IP address
         'PORT': '5432',            # <— PORT goes here (PostgreSQL default is 5432)
     }
 }

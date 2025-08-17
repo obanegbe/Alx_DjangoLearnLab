@@ -4,7 +4,7 @@ from .models import Post, Comment
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ["title", "content"]  # author will be set automatically
+        fields = ["title", "content", "tags"]  # author will be set automatically
 
 
 class CommentForm(forms.ModelForm):
@@ -14,3 +14,4 @@ class CommentForm(forms.ModelForm):
         widgets = {
             "content": forms.Textarea(attrs={"rows": 3, "placeholder": "Write your comment here..."})
         }
+

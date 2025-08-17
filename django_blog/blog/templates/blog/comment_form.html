@@ -1,10 +1,9 @@
-{% extends "base.html" %}
+{% extends "blog/base.html" %}
 {% block content %}
-<h2>New Comment</h2>
-<form method="post">
+  <h2>Update Comment</h2>
+  <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Add Comment</button>
-</form>
-<a href="{% url 'post-detail' pk=kwargs.pk %}">Cancel</a>
+    <button type="submit">Update</button>
+  </form>
 {% endblock %}
