@@ -3,6 +3,12 @@ from rest_framework import serializers
 from django.contrib.auth import authenticate
 from .models import User
 
+from rest_framework.authtoken.models import Token, 
+
+Token.objects.create
+get_user_model().objects.create_user
+
+
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, min_length=8)
 
