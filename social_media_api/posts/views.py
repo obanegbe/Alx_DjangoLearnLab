@@ -13,7 +13,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
 from notifications.models import Notification
 
-
+["generics.get_object_or_404(Post, pk=pk)"]
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
     """Custom permission to only allow owners to edit/delete their own content."""
