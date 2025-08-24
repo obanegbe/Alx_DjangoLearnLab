@@ -8,4 +8,8 @@ router.register(r"comments", CommentViewSet, basename="comment")
 
 urlpatterns = [
     path("", include(router.urls)),
+    router.urls
 ]
+
+router = DefaultRouter()
+router.register(r'posts', PostViewSet, basename="post")

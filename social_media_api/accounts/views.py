@@ -3,10 +3,14 @@ from django.shortcuts import render
 # accounts/views.py
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status, permissions
+from rest_framework import status, permissions, viewsets
 from rest_framework.authtoken.models import Token
 from .serializers import RegisterSerializer, LoginSerializer, UserSerializer
 from .models import User
+
+from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated
+
 
 class RegisterView(APIView):
     permission_classes = [permissions.AllowAny]
@@ -77,3 +81,19 @@ class UnfollowView(APIView):
         target.followers.remove(request.user)
         return Response({"detail": f"You unfollowed {target.username}."}, status=200)
 
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+    @action(detail=True, methods=["post"], permission_classes=[IsAuthenticated])
+    def follow(self, request, pk=None):
+        target_user = self.get_object()
+        request.user.following.add(target_user)
+        return Response({"detail": f"You are now following {target_user.username}"}, status=status.HTTP_200_OK)
+
+    @action(detail=True, methods=["post"], permission_classes=[IsAuthenticated])
+    def unfollow(self, request, pk=None):
+        target_user = self.get_object()
+        request.user.following.remove(target_user)
+        return Response({"detail": f"You unfollowed {target_user.username}"}, status=status.HTTP_200_OK)
