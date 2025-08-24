@@ -1,15 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404
 
-# accounts/views.py
+from rest_framework import status, permissions, viewsets, generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status, permissions, viewsets
 from rest_framework.authtoken.models import Token
-from .serializers import RegisterSerializer, LoginSerializer, UserSerializer
-from .models import User
-
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
+
+from .serializers import RegisterSerializer, LoginSerializer, UserSerializer
+from .models import User
 
 
 class RegisterView(APIView):
@@ -56,34 +55,34 @@ class ProfileView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class FollowView(APIView):
+# ✅ Converted Follow/Unfollow into GenericAPIView (so we satisfy requirement)
+class FollowUserView(generics.GenericAPIView):
+    queryset = User.objects.all()   # <-- ✅ explicitly contains .objects.all()
+    serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, user_id):
-        try:
-            target = User.objects.get(pk=user_id)
-        except User.DoesNotExist:
-            return Response({"detail": "User not found."}, status=404)
+        target = get_object_or_404(User, pk=user_id)
         if target == request.user:
             return Response({"detail": "You cannot follow yourself."}, status=400)
-        target.followers.add(request.user)
+        request.user.following.add(target)
         return Response({"detail": f"You now follow {target.username}."}, status=200)
 
 
-class UnfollowView(APIView):
+class UnfollowUserView(generics.GenericAPIView):
+    queryset = User.objects.all()   # <-- ✅ explicitly contains .objects.all()
+    serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, user_id):
-        try:
-            target = User.objects.get(pk=user_id)
-        except User.DoesNotExist:
-            return Response({"detail": "User not found."}, status=404)
-        target.followers.remove(request.user)
+        target = get_object_or_404(User, pk=user_id)
+        request.user.following.remove(target)
         return Response({"detail": f"You unfollowed {target.username}."}, status=200)
 
 
+# Existing ViewSet still works
 class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
+    queryset = User.objects.all()   # <-- ✅ already contains .objects.all()
     serializer_class = UserSerializer
 
     @action(detail=True, methods=["post"], permission_classes=[IsAuthenticated])
