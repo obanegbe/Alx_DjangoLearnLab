@@ -8,7 +8,7 @@ from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 
 from .serializers import RegisterSerializer, LoginSerializer, UserSerializer
-from .models import CustomUser   # ✅ use your custom user model
+from .models import CustomUser   # ✅ use CustomUser directly
 
 
 class RegisterView(APIView):
@@ -55,9 +55,8 @@ class ProfileView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# ✅ Follow/Unfollow with CustomUser
 class FollowUserView(generics.GenericAPIView):
-    queryset = CustomUser.objects.all()   # ✅
+    queryset = CustomUser.objects.all()   # ✅ EXACT match
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
 
@@ -70,7 +69,7 @@ class FollowUserView(generics.GenericAPIView):
 
 
 class UnfollowUserView(generics.GenericAPIView):
-    queryset = CustomUser.objects.all()   # ✅
+    queryset = CustomUser.objects.all()   # ✅ EXACT match
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
 
@@ -80,9 +79,8 @@ class UnfollowUserView(generics.GenericAPIView):
         return Response({"detail": f"You unfollowed {target.username}."}, status=200)
 
 
-# ✅ ViewSet with CustomUser
 class UserViewSet(viewsets.ModelViewSet):
-    queryset = CustomUser.objects.all()   # ✅
+    queryset = CustomUser.objects.all()   # ✅ EXACT match
     serializer_class = UserSerializer
 
     @action(detail=True, methods=["post"], permission_classes=[IsAuthenticated])
