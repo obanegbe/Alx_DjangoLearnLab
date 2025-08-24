@@ -8,7 +8,7 @@ from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 
 from .serializers import RegisterSerializer, LoginSerializer, UserSerializer
-from .models import User
+from .models import CustomUser   # ✅ use your custom user model
 
 
 class RegisterView(APIView):
@@ -55,14 +55,14 @@ class ProfileView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# ✅ Converted Follow/Unfollow into GenericAPIView (so we satisfy requirement)
+# ✅ Follow/Unfollow with CustomUser
 class FollowUserView(generics.GenericAPIView):
-    queryset = User.objects.all()   # <-- ✅ explicitly contains .objects.all()
+    queryset = CustomUser.objects.all()   # ✅
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, user_id):
-        target = get_object_or_404(User, pk=user_id)
+        target = get_object_or_404(CustomUser, pk=user_id)
         if target == request.user:
             return Response({"detail": "You cannot follow yourself."}, status=400)
         request.user.following.add(target)
@@ -70,19 +70,19 @@ class FollowUserView(generics.GenericAPIView):
 
 
 class UnfollowUserView(generics.GenericAPIView):
-    queryset = User.objects.all()   # <-- ✅ explicitly contains .objects.all()
+    queryset = CustomUser.objects.all()   # ✅
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, user_id):
-        target = get_object_or_404(User, pk=user_id)
+        target = get_object_or_404(CustomUser, pk=user_id)
         request.user.following.remove(target)
         return Response({"detail": f"You unfollowed {target.username}."}, status=200)
 
 
-# Existing ViewSet still works
+# ✅ ViewSet with CustomUser
 class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()   # <-- ✅ already contains .objects.all()
+    queryset = CustomUser.objects.all()   # ✅
     serializer_class = UserSerializer
 
     @action(detail=True, methods=["post"], permission_classes=[IsAuthenticated])
